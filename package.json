@@ -1,0 +1,22 @@
+{
+  "name": "performance-optimisation",
+  "version": "1.0.0",
+  "description": "Treehouse Project for Optimising an exisiting site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tcherokee/performance-optimisation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tcherokee/performance-optimisation/issues"
+  },
+  "homepage": "https://github.com/tcherokee/performance-optimisation#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
