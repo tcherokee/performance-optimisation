@@ -4,27 +4,26 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     inlnSrc = require('gulp-inline-source'),
-    cleanCSS = require('gulp-clean-css');
+    cleanCSS = require('gulp-clean-css'),
+    gulpSequence = require('gulp-sequence'),
+    rename = require('gulp-rename'),
+    pump = require('pump'),
+    htmlmin = require('gulp-htmlmin'),
+    del = require('del');
 
-
-
-gulp.task('inlineSourceCSS', function(){
-  return gulp.src('src/index.html')
-             .pipe(inlnSrc())
-             .pipe(gulp.dest('dist'))
+gulp.task('cleanTasks', function(){
+  del('dist');
 });
 
 gulp.task('processCSS', function(){
   return gulp.src([
                     'src/css/normalize.css',
                     'src/css/foundation.css',
-                    'src/css/arvo.css',
-                    'src/css/ubuntu.css',
                     'src/css/menu.css',
                     'src/css/hero.css',
                     'src/css/photo-grid.css',
                     'src/css/modals.css',
-                    'css/footer.css'
+                    'src/css/footer.css'
                   ])
                 .pipe(cleanCSS({
                   level: {
@@ -33,25 +32,40 @@ gulp.task('processCSS', function(){
                   }
                 }))
                 .pipe(concat('styles.min.css'))
-                .pipe(gulp.dest('dist'))
+                .pipe(gulp.dest('dist/css'))
 });
 
 gulp.task('concatScripts', function(){
-  gulp.src([
+  return gulp.src([
             'src/js/jquery.js',
             'src/js/fastclick.js',
             'src/js/foundation.js',
-            'src/foundation.equalizer.js',
-            'src/foundation.reveal.js'
+            'src/js/foundation.equalizer.js',
+            'src/js/foundation.reveal.js'
           ])
       .pipe(concat('app.js'))
       .pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('minifyScripts', function(){
-  gulp.src(['dist/app.js'])
-      .pipe(uglify())
-      .pipe(gulp.dest(./))
+gulp.task('compressJS', ['concatScripts'], function(err){
+  pump([
+    gulp.src('dist/js/app.js'),
+    uglify(),
+    rename({suffix: '.min'}),
+    gulp.dest('dist/js')
+  ],err)
 });
 
-gulp.task('default', ['inlineSourceCSS', 'processCSS', 'concatScripts', 'minifyScripts']);
+gulp.task('copyIndexImg', function(){
+  return gulp.src(['src/img/**', 'src/index.html', 'src/css/basics.css'], {base:'src'})
+      .pipe(gulp.dest('dist'))
+})
+
+gulp.task('inlineSourceCSS', ['copyIndexImg'], function(){
+  gulp.src('dist/index.html')
+             .pipe(inlnSrc())
+             .pipe(htmlmin({collapseWhitespace: true}))
+             .pipe(gulp.dest('dist'))
+});
+
+gulp.task('default', gulpSequence('processCSS', 'compressJS', 'inlineSourceCSS'));
