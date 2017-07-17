@@ -15,7 +15,7 @@ gulp.task('cleanTasks', function(){
   del('dist');
 });
 
-gulp.task('processCSS', function(){
+gulp.task('processCSS', ['cleanTasks'], function(){
   return gulp.src([
                     'src/css/normalize.css',
                     'src/css/foundation.css',
