@@ -27,4 +27,7 @@
     height: 50px;
     margin-left: 1rem;
     width: 50px;
+    background: url('../img/avatars/avatar-sprite-n.jpg') no-repeat;
+    background-size: 300%;
+    background-position: 0px 0px;
 }

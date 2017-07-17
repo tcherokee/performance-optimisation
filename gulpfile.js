@@ -18,20 +18,24 @@ gulp.task('cleanTasks', function(){
 gulp.task('processCSS', ['cleanTasks'], function(){
   return gulp.src([
                     'src/css/normalize.css',
-                    'src/css/foundation.css',
+                    'src/css/foundation.min.css',
                     'src/css/menu.css',
                     'src/css/hero.css',
                     'src/css/photo-grid.css',
                     'src/css/modals.css',
                     'src/css/footer.css'
                   ])
+                .pipe(concat('styles.min.css'))
                 .pipe(cleanCSS({
                   level: {
-                    1: {},
-                    2: {}
+                    1: {
+                      all: true
+                    },
+                    2: {
+                      all: true
+                    }
                   }
                 }))
-                .pipe(concat('styles.min.css'))
                 .pipe(gulp.dest('dist/css'))
 });
 

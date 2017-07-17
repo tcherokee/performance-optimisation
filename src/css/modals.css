@@ -15,4 +15,21 @@
     height: 75px;
     margin-right: 1rem;
     width: 75px;
+    background: url('../img/avatars/avatar-sprite-n.jpg') no-repeat;
+    background-size: 300%;
+}
+.reveal-modal .info .avatar3 {
+    background-position: -75px 0px;
+}
+.reveal-modal .info .avatar4 {
+    background-position: -150px 0px;
+}
+.reveal-modal .info .avatar5 {
+    background-position: 0px -75px;
+}
+.reveal-modal .info .avatar6 {
+    background-position: -75px -75px;
+}
+.reveal-modal .info .avatar7 {
+    background-position: -150px -75px;
 }
