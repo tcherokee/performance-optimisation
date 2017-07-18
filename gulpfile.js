@@ -18,7 +18,8 @@ gulp.task('cleanTasks', function(){
 gulp.task('processCSS', ['cleanTasks'], function(){
   return gulp.src([
                     'src/css/normalize.css',
-                    'src/css/foundation.min.css',
+                    'src/css/foundation.css',
+                    'src/css/basics.css',
                     'src/css/menu.css',
                     'src/css/hero.css',
                     'src/css/photo-grid.css',
@@ -29,10 +30,8 @@ gulp.task('processCSS', ['cleanTasks'], function(){
                 .pipe(cleanCSS({
                   level: {
                     1: {
-                      all: true
                     },
                     2: {
-                      all: true
                     }
                   }
                 }))
@@ -45,7 +44,8 @@ gulp.task('concatScripts', function(){
             'src/js/fastclick.js',
             'src/js/foundation.js',
             'src/js/foundation.equalizer.js',
-            'src/js/foundation.reveal.js'
+            'src/js/foundation.reveal.js',
+            'src/js/lazyload.js'
           ])
       .pipe(concat('app.js'))
       .pipe(gulp.dest('dist/js'))
